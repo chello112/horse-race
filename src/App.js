@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Container, Navbar, Row, Col } from "react-bootstrap";
+import AddHorse from "./components/AddHorse";
+import HorseList from "./components/HorseList";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import RandomPicker from "./components/RandomPicker";
 
 function App() {
+  const [horseId, setHorseId] = useState("");
+
+  const getHorseIdHandler = (id) => {
+    console.log("The ID of document to be edited: ", id);
+    setHorseId(id);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar bg="dark" variant="dark" className="header">
+        <Container>
+          <Navbar.Brand href="#home">Horse Race Betting System</Navbar.Brand>
+        </Container>
+      </Navbar>
+
+      <Container style={{ width: "400px" }}>
+        <Row>
+          <Col>
+            <AddHorse id={horseId} setHorseId={setHorseId} />
+          </Col>
+        </Row>
+      </Container>
+      <Container>
+        <Row>
+          <Col>
+            <HorseList getHorseId={getHorseIdHandler} />
+          </Col>
+        </Row>
+      </Container>
+      <Container>
+        <RandomPicker /> 
+      </Container>
+    </>
   );
 }
 
