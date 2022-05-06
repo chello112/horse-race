@@ -6,7 +6,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RandomPicker from "./components/RandomPicker";
 import Race from "./components/race-events/Race";
-import Modal from "./components/Modal";
+//import Modal from "./components/Modal";
 
 function App() {
   const [horseId, setHorseId] = useState("");
