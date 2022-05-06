@@ -8,6 +8,12 @@ const HorseList = ({ getHorseId }) => {
     getHorse();
   }, []);
 
+  const updateHorses = async () => {
+    const data = await HorseDataService.getAllHorses();
+    console.log(data.docs);
+    setHorses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
+
   const getHorse = async () => {
     const data = await HorseDataService.getAllHorses();
     console.log(data.docs);
@@ -17,6 +23,24 @@ const HorseList = ({ getHorseId }) => {
   const deleteHandler = async (id) => {
     await HorseDataService.deleteHorse(id);
     getHorse();
+  };
+
+  const randomizer = () => {
+    for (let i = 0; i < 20; i++) {
+      setTimeout(pickRandomHorse, 100 * i + 100);
+    }
+  };
+
+  const pickRandomHorse = () => {
+    const randomHorse = horses[Math.floor(Math.random() * horses.length)];
+
+    const newHorses = horses.map((horse) =>
+      horse === randomHorse
+        ? { ...horse, selected: true }
+        : { ...horse, selected: false }
+    );
+
+    updateHorses(newHorses);
   };
 
   return (
@@ -48,14 +72,14 @@ const HorseList = ({ getHorseId }) => {
                   <Button
                     variant="secondary"
                     className="edit"
-                    onClick={(e) => getHorseId(doc.id)}
+                    onClick={() => getHorseId(doc.id)}
                   >
                     Edit
                   </Button>
                   <Button
                     variant="danger"
                     className="delete"
-                    onClick={(e) => deleteHandler(doc.id)}
+                    onClick={() => deleteHandler(doc.id)}
                   >
                     Delete
                   </Button>
@@ -65,6 +89,11 @@ const HorseList = ({ getHorseId }) => {
           })}
         </tbody>
       </Table>
+      {horses.length > 0 && (
+        <>
+          <button onClick={randomizer}>Randomize</button>
+        </>
+      )}
     </>
   );
 };

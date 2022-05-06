@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "address": "Tallinn Hippodrome",
+      "date": "01.06.2022"
+    },
+    {
+      "id": 2,
+      "address": "Tartu Hippodrome",
+      "date": "20.06.2022"
+    },
+    {
+      "id": 3,
+      "address": "Pärnu Hippodrome",
+      "date": "28.06.2022"
+    },
+    {
+      "id": 4,
+      "address": "Saaremaa Hippodrome",
+      "date": "03.07.2022"
+    },
+    {
+      "id": 5,
+      "address": "Jõhvi Hippodrome",
+      "date": "30.07.2022"
+    }
+  ]

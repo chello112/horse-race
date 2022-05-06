@@ -8,7 +8,7 @@ const AddHorse = ({ id, setHorseId }) => {
   const [message, setMessage] = useState({ error: false, msg: "" });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault();                    
     setMessage("");
     if (horseName === "" || color === "") {
       setMessage({ error: true, msg: "All fields are mandatory!" });
@@ -32,6 +32,7 @@ const AddHorse = ({ id, setHorseId }) => {
     } catch (err) {
       setMessage({ error: true, msg: err.message });
     }
+   
 
     setHorseName("");
     setColor("");
@@ -56,8 +57,11 @@ const AddHorse = ({ id, setHorseId }) => {
     }
   }, [id]);
   return (
+  
     <>
-      <div className="p-4 box">
+     <hr></hr>
+      <div className="p-6 box">
+      
         {message?.msg && (
           <Alert
             variant={message?.error ? "danger" : "success"}
@@ -90,7 +94,7 @@ const AddHorse = ({ id, setHorseId }) => {
               />
             </InputGroup>
           </Form.Group>
-         
+
           <div className="d-grid gap-2">
             <Button variant="primary" type="Submit">
               Add/Update

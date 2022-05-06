@@ -5,6 +5,8 @@ import HorseList from "./components/HorseList";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RandomPicker from "./components/RandomPicker";
+import Race from "./components/race-events/Race";
+import Modal from "./components/Modal";
 
 function App() {
   const [horseId, setHorseId] = useState("");
@@ -20,7 +22,9 @@ function App() {
           <Navbar.Brand href="#home">Horse Race Betting System</Navbar.Brand>
         </Container>
       </Navbar>
-
+      <Container>
+        <Race />
+      </Container>
       <Container style={{ width: "400px" }}>
         <Row>
           <Col>
@@ -36,7 +40,7 @@ function App() {
         </Row>
       </Container>
       <Container>
-        <RandomPicker /> 
+        <RandomPicker />
       </Container>
     </>
   );

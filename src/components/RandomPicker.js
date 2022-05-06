@@ -1,79 +1,71 @@
 import React, { useState } from "react";
 
-// FUNCTIONALITIES
-// input -> save to state ✅
-// button (top) -> add to list ✅
-// button (bottom) -> trigger the randomizer ✅
-// item doubleclick -> remove it ✅
-// save to localStorage ✅
+const defaultItems = JSON.parse(localStorage.getItem("participants")) || [];
 
-const defaultItems = JSON.parse(localStorage.getItem("items")) || [];
-
-const storeToStorage = (items) => {
-  localStorage.setItem("items", JSON.stringify(items));
+const storeToStorage = (participants) => {
+  localStorage.setItem("participants", JSON.stringify(participants));
 };
 
 function RandomPicker() {
-  const [items, setItems] = useState(defaultItems);
+  const [participants, setParticipants] = useState(defaultItems);
   const [inputValue, setInputValue] = useState("");
 
-  const updateItems = (newItems) => {
-    // updated Items in LocalStorage
-    storeToStorage(newItems);
+  const updateParticipants = (newParticipants) => {
+    storeToStorage(newParticipants);
 
     // update State
-    setItems(newItems);
+    setParticipants(newParticipants);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (inputValue !== "") {
-      const newItem = {
+      const newParticipant = {
         text: inputValue,
         selected: false,
       };
 
-      const newItems = [...items, newItem];
+      const newParticipants = [...participants, newParticipant];
 
-      updateItems(newItems);
+      updateParticipants(newParticipants);
       setInputValue("");
     }
   };
 
   const randomizer = () => {
     for (let i = 0; i < 20; i++) {
-      setTimeout(pickRandomItem, 100 * i + 100);
+      setTimeout(pickRandomParticipant, 100 * i + 100);
     }
   };
 
-  const pickRandomItem = () => {
-    const randomItem = items[Math.floor(Math.random() * items.length)];
+  const pickRandomParticipant = () => {
+    const randomParticipant = participants[Math.floor(Math.random() * participants.length)];
 
-    const newItems = items.map((item) =>
-      item === randomItem
-        ? { ...item, selected: true }
-        : { ...item, selected: false }
+    const newParticipants = participants.map((participant) =>
+    participant === randomParticipant
+        ? { ...participant, selected: true }
+        : { ...participant, selected: false }
     );
 
-    updateItems(newItems);
+    updateParticipants(newParticipants);
   };
 
-  const removeItem = (i) => {
-    const newItems = items.filter((_, index) => index !== i);
+  const removeParticipant = (i) => {
+    const newParticipants = participants.filter((_, index) => index !== i);
 
-    updateItems(newItems);
+    updateParticipants(newParticipants);
   };
 
   return (
     <>
-      <h1>Randomizer</h1>
+      <h1>Winner announcer</h1>
       <div className="container bg-white mx-auto shadow-lg w-full sm:w-2/4 h-auto p-6">
         <form onSubmit={handleSubmit} className="flex">
           <input
             className="py-2 px-4 border border-gray-500 flex-1"
             type="text"
-            placeholder="Add a new item"
+            placeholder="Add a new horse"
             value={inputValue}
             onChange={(e) => {
               setInputValue(e.target.value);
@@ -85,27 +77,26 @@ function RandomPicker() {
         </form>
 
         <ul>
-          {items.map((item, index) => (
+          {participants.map((participant, index) => (
             <li
               className={`select cursor-pointer hover:bg-orange-300 my-3 p-2 ${
-                item.selected ? "bg-orange-500 text-white" : ""
+                participant.selected ? "bg-orange-500 text-white" : ""
               }`}
-              onDoubleClick={() => removeItem(index)}
+              onDoubleClick={() => removeParticipant(index)}
               key={index}
             >
-              {item.text}
+              {participant.text}
             </li>
           ))}
         </ul>
 
-        {items.length > 0 && (
+        {participants.length > 0 && (
           <>
-            <button onClick={randomizer}>Randomize</button>
-            <small>* Double click to remove an item</small>
+            <button onClick={randomizer}>View winner</button>
+            <small>* Double click to remove horse from the list</small>
           </>
         )}
       </div>
-	  
     </>
   );
 }
